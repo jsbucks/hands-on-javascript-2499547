@@ -20,15 +20,26 @@ const newData = data.map((imgData) => {
 const mainContent = document.querySelector(".main-content");
 const loadButton = document.querySelector("#load");
 const loader = document.querySelector(".loader");
+const target = document.querySelector(".cardlist");
+console.log("🚀 ~ file: script.js:24 ~ target", target);
 
-loadButton.addEventListener("click", () => {
-  loader.classList.toggle("hidden");
-  loadButton.classList.toggle("hidden");
-  setTimeout(() => {
-    mainContent.innerHTML = Cardlist(newData);
-  }, 3000);
-});
+const loadCards = (entries) => {
+  console.log("🚀 ~ file: script.js:26 ~ loadCards ~ entries", entries);
+  entries.forEach(function (entry) {
+    console.log("entry.isIntesecting", entry.isIntesecting);
+    if (entry.isIntesecting) {
+      loader.classList.toggle("hidden");
+      loadButton.classList.toggle("hidden");
+      setTimeout(() => {
+        mainContent.innerHTML = Cardlist(newData);
+      }, 3000);
+    }
+  });
+};
 
+const observer = new IntersectionObserver(loadCards);
+
+observer.observe(target);
 /**
  * Light/dark mode feature.
  */
